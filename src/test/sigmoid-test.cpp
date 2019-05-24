@@ -8,6 +8,7 @@
 #include <Eigen/Core>
 #include <nn/nn.h>
 
+// Test sigmoid and sigmoid_d activation functions
 TEST_CASE("sigmoid", "[unit]")
 {
     Eigen::Matrix<double, 1, Eigen::Dynamic>

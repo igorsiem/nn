@@ -3,5 +3,5 @@
  * Include everything in the `nn` library
  */
 
-///#include "node.h"
+#include "learn.h"
 #include "sigmoid.h"

@@ -31,7 +31,10 @@ template <typename arrayT>
 auto sigmoid(const arrayT& arr)
 {
     return arr.unaryExpr(
-        [](typename arrayT::Scalar n){ return 1/(1+exp(-n)); });
+        [](typename arrayT::Scalar n)
+        {
+            return static_cast<typename arrayT::Scalar>((1/(1+exp(-n))));
+        });
 }   // end sigmoid function
 
 /**
@@ -50,7 +53,10 @@ template <typename arrayT>
 auto sigmoid_d(const arrayT& arr)
 {
     return arr.unaryExpr(
-        [](typename arrayT::Scalar n){ return n * (1-n); });
+        [](typename arrayT::Scalar n)
+        {
+            return static_cast<typename arrayT::Scalar>((n * (1-n)));
+        });
 }
 
 }   // end nn namespace
