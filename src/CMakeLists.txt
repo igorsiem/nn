@@ -7,4 +7,8 @@ set(CMAKE_CXX_STANDARD 17)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+include_directories(
+    .
+)
+
 add_subdirectory(test)

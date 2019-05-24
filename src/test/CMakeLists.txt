@@ -2,3 +2,4 @@
 
 file (GLOB_RECURSE TEST_SRC *.cpp)
 add_executable(test-nn ${TEST_SRC})
+target_link_libraries(test-nn ${CONAN_LIBS})
