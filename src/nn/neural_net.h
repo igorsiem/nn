@@ -1,5 +1,5 @@
 /**
- * \file learn.h
+ * \file neural_net.h
  * The core 'learning' implementation
  */
 
