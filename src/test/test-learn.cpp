@@ -4,6 +4,7 @@
  */
 
 #include <iostream>
+#include <chrono>
 #include <catch2/catch.hpp>
 #include <Eigen/Core>
 #include <fmt/format.h>
@@ -11,12 +12,14 @@
 
 using namespace fmt::literals;
 
-// Basic test of the core `nn::learn` method. This is taken from "A Neural
-// Network in 10 lines of C++ Code" (https://cognitivedemons.wordpress.com/2017/07/06/a-neural-network-in-10-lines-of-c-code/)
-TEST_CASE("learn", "[uni]")
+// Basic test of the core `nn::learn` method. This test (and its expected
+// values) is taken from "A Neural Network in 10 lines of C++ Code"
+// (https://cognitivedemons.wordpress.com/2017/07/06/a-neural-network-in-10-lines-of-c-code/)
+TEST_CASE("learn", "[unit]")
 {
-    Eigen::Matrix<float, 4, 4> X;
-    Eigen::Matrix<float, 4, 1> y, W, pred, pred_exp;
+    using ScalarT = float;
+    Eigen::Matrix<ScalarT, 4, 4> X;
+    Eigen::Matrix<ScalarT, 4, 1> y, W, pred, pred_exp;
 
     X <<
         5.1, 3.5, 1.4, 0.2,
@@ -29,10 +32,12 @@ TEST_CASE("learn", "[uni]")
     W << 0.5, 0.5, 0.5, 0.5;
 
     for (int i = 0; i < 50; i++)
-        nn::learn(X, W, pred, y);
+    {
 
-    ///std::cout << std::endl << "[DEBUG] [{}, {}, {}, {}]"_format(
-    ///    pred(0), pred(1), pred(2), pred(3)) << std::endl;
+        nn::sigmoid_activator activator;
+        nn::learn(X, W, pred, y, activator);
+
+    }   //end learning loop
 
     pred_exp << 0.0511965, 0.0696981, 0.931842, 0.899579;
 

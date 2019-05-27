@@ -15,49 +15,63 @@
 namespace nn {
 
 /**
- * \brief Apply the sigmoid function to an Eigen array-like object
+ * \brief Activation framework using the sigmoid function and its first
+ * derivative
  * 
- * This serves as one candidate for an activation function in the neural
- * net.
- * 
- * \typename arrayT The array-like type (anything that has a `Scalar` subtype
- * and a `unaryExpr` method)
- * 
- * \param arr The input array
- * 
- * \return The result of applying the sigmoid function to the input array
+ * The sigmoid function is one type of activator that may be used with neural
+ * nets.
  */
-template <typename arrayT>
-auto sigmoid(const arrayT& arr)
+class sigmoid_activator
 {
-    return arr.unaryExpr(
-        [](typename arrayT::Scalar n)
-        {
-            return static_cast<typename arrayT::Scalar>((1/(1+exp(-n))));
-        });
-}   // end sigmoid function
 
-/**
- * \brief Calculate the first derivative of the sigmoid function on an
- * array-like Eigen object *of sigmoid function values*
- * 
- * \typename arrayT The array-like type (anything that has a `Scalar` subtype
- * and a `unaryExpr` method)
- * 
- * \param arr The input array; this should be the result of the `sigmoid`
- * function
- * 
- * \return The first derivative of the sigmoid function value
- */
-template <typename arrayT>
-auto sigmoid_d(const arrayT& arr)
-{
-    return arr.unaryExpr(
-        [](typename arrayT::Scalar n)
-        {
-            return static_cast<typename arrayT::Scalar>((n * (1-n)));
-        });
-}
+    public:
+
+    /**
+     * \brief Apply the sigmoid function to an Eigen array-like object
+     * 
+     * This serves as one candidate for an activation function in the neural
+     * net.
+     * 
+     * \tparam ArrayT The array-like type (anything that has a `Scalar`
+     * subtype and a `unaryExpr` method)
+     * 
+     * \param arr The input array
+     * 
+     * \return The result of applying the sigmoid function to the input array
+     */
+    template <typename ArrayT>
+    static auto activate(const ArrayT& arr)
+    {
+        return arr.unaryExpr(
+            [](typename ArrayT::Scalar n)
+            {
+                return static_cast<typename ArrayT::Scalar>((1/(1+exp(-n))));
+            });    
+    }
+
+    /**
+     * \brief Calculate the first derivative of the sigmoid function on an
+     * array-like Eigen object *of sigmoid function values*
+     * 
+     * \typename ArrayT The array-like type (anything that has a `Scalar`
+     * subtype and a `unaryExpr` method)
+     * 
+     * \param arr The input array; this should be the result of the `sigmoid`
+     * function
+     * 
+     * \return The first derivative of the sigmoid function value
+     */
+    template <typename ArrayT>
+    static auto activate_d(const ArrayT& arr)
+    {
+        return arr.unaryExpr(
+            [](typename ArrayT::Scalar n)
+            {
+                return static_cast<typename ArrayT::Scalar>((n * (1-n)));
+            });
+    }
+
+};  // end sigmoid_activator class
 
 }   // end nn namespace
 
