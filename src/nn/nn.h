@@ -3,5 +3,5 @@
  * Include everything in the `nn` library
  */
 
-#include "learn.h"
+#include "neural_net.h"
 #include "sigmoid.h"

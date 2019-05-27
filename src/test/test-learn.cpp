@@ -19,7 +19,7 @@ TEST_CASE("learn", "[unit]")
 {
     using ScalarT = float;
     Eigen::Matrix<ScalarT, 4, 4> X;
-    Eigen::Matrix<ScalarT, 4, 1> y, W, pred, pred_exp;
+    Eigen::Matrix<ScalarT, 4, 1> outcomes, W, pred, pred_exp;
 
     X <<
         5.1, 3.5, 1.4, 0.2,
@@ -27,17 +27,12 @@ TEST_CASE("learn", "[unit]")
         6.2, 3.4, 5.4, 2.3,
         5.9, 3.0, 5.1, 1.8;
 
-    y << 0.0, 0.0, 1.0, 1.0;
+    outcomes << 0.0, 0.0, 1.0, 1.0;
 
     W << 0.5, 0.5, 0.5, 0.5;
 
-    for (int i = 0; i < 50; i++)
-    {
-
-        nn::sigmoid_activator activator;
-        nn::learn(X, W, pred, y, activator);
-
-    }   //end learning loop
+    using net_t = nn::neural_net<nn::sigmoid_activator>;
+    net_t::learn(X, W, pred, outcomes, 50);
 
     pred_exp << 0.0511965, 0.0696981, 0.931842, 0.899579;
 
